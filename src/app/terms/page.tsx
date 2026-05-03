@@ -4,7 +4,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.co
 
 export const metadata: Metadata = {
   title: 'Terms of Service â€” OnlyBritishFans',
-  description: 'Terms of service for OnlyBritishFans, Australia\'s OnlyFans search directory.',
+  description: 'Terms of service for OnlyBritishFans, the UK\'s OnlyFans search directory.',
   alternates: { canonical: `${SITE_URL}/terms/` },
 };
 
@@ -61,7 +61,7 @@ export default function TermsPage() {
 
       <h2>Governing Law</h2>
       <p>
-        These terms are governed by the laws of England and Wales, Australia. Any disputes shall be
+        These terms are governed by the laws of England and Wales. Any disputes shall be
         subject to the exclusive jurisdiction of the courts of England and Wales.
       </p>
     </div>

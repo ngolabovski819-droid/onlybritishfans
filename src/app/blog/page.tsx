@@ -33,7 +33,7 @@ export default function BlogPage() {
           {posts.map(post => (
             <Link key={post.slug} href={`/blog/${post.slug}/`} className="blog-card" style={{ textDecoration: 'none' }}>
               <div className="blog-card-body">
-                <p className="blog-card-date">{new Date(post.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className="blog-card-date">{new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 <h2 className="blog-card-title">{post.title}</h2>
                 <p className="blog-card-desc">{post.description}</p>
               </div>

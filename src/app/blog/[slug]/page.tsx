@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         <h1>{post.title}</h1>
         <p className="blog-post-meta">
-          Published {new Date(post.date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}
+          Published {new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
 
         <div
