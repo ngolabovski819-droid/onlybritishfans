@@ -6,7 +6,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import AgeGate from '@/components/AgeGate';
 
-const GA_ID = 'G-PLACEHOLDER';
+const GA_ID = 'G-JMC006C5K7';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const syne  = Syne({ subsets: ['latin'], variable: '--font-syne',  display: 'swap', weight: ['700', '800'] });
