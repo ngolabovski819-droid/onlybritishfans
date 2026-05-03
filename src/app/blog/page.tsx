@@ -4,11 +4,11 @@ import { getAllPosts } from '@/lib/blog';
 
 export const revalidate = 3600;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 export const metadata: Metadata = {
-  title: 'Blog — Australian OnlyFans Tips & Guides',
-  description: 'Tips, guides and news about Australian OnlyFans creators. Find advice on subscribing, discovering creators, and making the most of your experience.',
+  title: 'Blog â€” British OnlyFans Tips & Guides',
+  description: 'Tips, guides and news about British OnlyFans creators. Find advice on subscribing, discovering creators, and making the most of your experience.',
   alternates: { canonical: `${SITE_URL}/blog/` },
 };
 
@@ -21,12 +21,12 @@ export default function BlogPage() {
         Blog
       </h1>
       <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem' }}>
-        Guides, tips and news about Australian OnlyFans creators.
+        Guides, tips and news about British OnlyFans creators.
       </p>
 
       {posts.length === 0 ? (
         <div className="empty-state">
-          <p>Blog posts coming soon — check back shortly.</p>
+          <p>Blog posts coming soon â€” check back shortly.</p>
         </div>
       ) : (
         <div className="blog-grid">

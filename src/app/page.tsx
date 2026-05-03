@@ -1,65 +1,62 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchCreators } from '@/lib/supabase';
-import { popularCategories } from '@/config/categories';
-import { states } from '@/config/states';
+import { regions } from '@/config/regions';
 import CreatorGrid from '@/components/CreatorGrid';
 import CreatorGridSkeleton from '@/components/CreatorGridSkeleton';
 import StatsBar from '@/components/StatsBar';
-import CategoryBrowse from '@/components/CategoryBrowse';
 import { Suspense } from 'react';
 
 export const revalidate = 300;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 export const metadata: Metadata = {
-  title: 'OnlyAussieFans — Find the Best Australian OnlyFans Creators',
+  title: 'OnlyBritishFans — Find the Best British OnlyFans Creators',
   description:
-    'Discover top Australian OnlyFans creators sorted by popularity. Search by city, state, category and price. 500+ verified Aussie creators.',
+    'Discover top British OnlyFans creators sorted by popularity. Search by city, region and price. Thousands of verified UK creators.',
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: 'OnlyAussieFans — #1 Australian OnlyFans Search Engine',
-    description: 'Find top Aussie OnlyFans creators by location, category & price.',
+    title: 'OnlyBritishFans — #1 British OnlyFans Search Engine',
+    description: 'Find top British OnlyFans creators by location & price.',
     url: SITE_URL,
     images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630 }],
   },
 };
 
-// Safe AU location terms — no ambiguous abbreviations that match US/intl locations.
-// 'australia' covers ~726 creators (dominant). Other city/state names add specificity.
-// Deliberately excluded: 'victoria' (matches Victoria BC, Canada),
-//   'newcastle' (matches Newcastle Upon Tyne, UK).
-const AU_TERMS = [
-  'australia', 'australian', 'aussie',
-  'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide', 'canberra', 'darwin', 'hobart',
-  'gold coast', 'sunshine coast', 'wollongong', 'geelong', 'cairns', 'townsville',
-  'new south wales', 'queensland', 'western australia', 'south australia', 'northern territory', 'tasmania',
+// UK location terms for homepage feed
+const UK_TERMS = [
+  'uk', 'united kingdom', 'british', 'england', 'english',
+  'london', 'manchester', 'birmingham', 'glasgow', 'liverpool',
+  'edinburgh', 'bristol', 'leeds', 'sheffield', 'cardiff',
+  'newcastle', 'nottingham', 'southampton', 'leicester', 'brighton',
+  'aberdeen', 'swansea', 'belfast', 'scotland', 'scottish',
+  'wales', 'welsh', 'northern ireland',
 ];
 
 async function TrendingCreators() {
-  const { creators, total, hasMore } = await fetchCreators({ pageSize: 20, sort: 'popular', revalidate: 300, locationTerms: AU_TERMS });
+  const { creators, total, hasMore } = await fetchCreators({ pageSize: 20, sort: 'popular', revalidate: 300, locationTerms: UK_TERMS });
   return (
     <CreatorGrid
       initialCreators={creators}
       initialTotal={total}
       initialHasMore={hasMore}
-      locationTerms={AU_TERMS}
+      locationTerms={UK_TERMS}
       />
   );
 }
 
 const QUICK_TABS = [
   { label: 'All Creators', href: '/search' },
-  { label: 'Free OnlyFans', href: '/categories/free' },
+  { label: 'Free OnlyFans', href: '/search?price=free' },
   { label: 'Verified Only', href: '/search?verified=true' },
-  { label: 'New to OnlyFans', href: '/categories/new' },
+  { label: 'Newest Creators', href: '/search?sort=newest' },
 ];
 
 const REVIEWS = [
-  { text: "Found my favourite Aussie creator in under 30 seconds. The filters are actually useful!", author: "User from Sydney" },
-  { text: "Finally a search site specifically for Australian creators. Much better than scrolling Reddit!", author: "Perth fan" },
-  { text: "The location filter is brilliant. Found Brisbane creators I never knew existed.", author: "Brisbane user" },
+  { text: "Found my favourite London creator in under 30 seconds. The filters are actually useful!", author: "User from Manchester" },
+  { text: "Finally a search site specifically for British creators. Much better than scrolling Reddit!", author: "Edinburgh fan" },
+  { text: "The location filter is brilliant. Found Birmingham creators I never knew existed.", author: "Bristol user" },
 ];
 
 export default async function HomePage() {
@@ -67,14 +64,14 @@ export default async function HomePage() {
     <>
       {/* ── Hero ── */}
       <section className="hero">
-        <p className="hero-eyebrow">🇦🇺 Australia&apos;s #1 OnlyFans Directory</p>
+        <p className="hero-eyebrow">🇬🇧 Britain&apos;s #1 OnlyFans Directory</p>
         <h1 className="hero-title">
           Find the Best{' '}
-          <span className="hero-title-gradient">Australian OnlyFans</span>{' '}
+          <span className="hero-title-gradient">British OnlyFans</span>{' '}
           Creators
         </h1>
         <p className="hero-subtitle">
-          Search 500+ verified Aussie creators by location, category and price.
+          Search thousands of verified UK creators by location and price.
           Updated daily with the latest profiles.
         </p>
 
@@ -85,7 +82,7 @@ export default async function HomePage() {
               type="text"
               name="q"
               className="hero-search-input"
-              placeholder="Search by name, city or category…"
+              placeholder="Search by name, city or keyword…"
               aria-label="Search creators"
             />
             <button type="submit" className="hero-search-btn">Search</button>
@@ -103,13 +100,13 @@ export default async function HomePage() {
       {/* ── Stats Bar ── */}
       <StatsBar />
 
-      {/* ── Browse by State ── */}
+      {/* ── Browse by Region ── */}
       <section style={{ padding: '2.5rem 1.5rem 0', maxWidth: 1400, margin: '0 auto' }}>
-        <h2 className="section-heading">Browse by Australian State</h2>
+        <h2 className="section-heading">Browse by UK Region</h2>
         <div className="chips-row chips-row--wrap">
-          {states.map(s => (
-            <Link key={s.slug} href={`/${s.urlSlug}/`} className="location-chip location-chip--state">
-              {s.abbr} — {s.label}
+          {regions.map(r => (
+            <Link key={r.slug} href={`/${r.urlSlug}/`} className="location-chip location-chip--state">
+              {r.abbr} — {r.label}
             </Link>
           ))}
         </div>
@@ -117,28 +114,25 @@ export default async function HomePage() {
 
       {/* ── Trending Creators ── */}
       <section style={{ padding: '2.5rem 1.5rem', maxWidth: 1400, margin: '0 auto' }}>
-        <h2 className="section-heading">🔥 Trending Australian Creators</h2>
+        <h2 className="section-heading">🔥 Trending British Creators</h2>
         <Suspense fallback={<CreatorGridSkeleton />}>
           <TrendingCreators />
         </Suspense>
       </section>
-
-      {/* ── Category Browse ── */}
-      <CategoryBrowse />
 
       {/* ── Popular Cities ── */}
       <section style={{ padding: '0 1.5rem 3rem', maxWidth: 1400, margin: '0 auto' }}>
         <h2 className="section-heading">Popular Cities</h2>
         <div className="chips-row chips-row--wrap">
           {[
-            { label: 'Sydney OnlyFans', href: '/sydney-onlyfans/' },
-            { label: 'Melbourne OnlyFans', href: '/melbourne-onlyfans/' },
-            { label: 'Brisbane OnlyFans', href: '/brisbane-onlyfans/' },
-            { label: 'Perth OnlyFans', href: '/perth-onlyfans/' },
-            { label: 'Gold Coast OnlyFans', href: '/gold-coast-onlyfans/' },
-            { label: 'Adelaide OnlyFans', href: '/adelaide-onlyfans/' },
-            { label: 'Canberra OnlyFans', href: '/canberra-onlyfans/' },
-            { label: 'Darwin OnlyFans', href: '/darwin-onlyfans/' },
+            { label: 'London OnlyFans', href: '/london-onlyfans/' },
+            { label: 'Manchester OnlyFans', href: '/manchester-onlyfans/' },
+            { label: 'Birmingham OnlyFans', href: '/birmingham-onlyfans/' },
+            { label: 'Glasgow OnlyFans', href: '/glasgow-onlyfans/' },
+            { label: 'Liverpool OnlyFans', href: '/liverpool-onlyfans/' },
+            { label: 'Edinburgh OnlyFans', href: '/edinburgh-onlyfans/' },
+            { label: 'Bristol OnlyFans', href: '/bristol-onlyfans/' },
+            { label: 'Cardiff OnlyFans', href: '/cardiff-onlyfans/' },
           ].map(c => (
             <Link key={c.href} href={c.href} className="location-chip">{c.label}</Link>
           ))}
@@ -147,13 +141,13 @@ export default async function HomePage() {
 
       {/* ── How it Works ── */}
       <section className="how-it-works">
-        <h2 className="how-it-works-title">How OnlyAussieFans Works</h2>
-        <p className="how-it-works-sub">Finding your favourite Aussie creator is quick and easy.</p>
+        <h2 className="how-it-works-title">How OnlyBritishFans Works</h2>
+        <p className="how-it-works-sub">Finding your favourite British creator is quick and easy.</p>
         <div className="how-it-works-steps">
           <div className="how-step">
             <div className="how-step-num">01</div>
             <h3>Search or Browse</h3>
-            <p>Use our search bar or browse by state, city or category to find creators.</p>
+            <p>Use our search bar or browse by region or city to find creators.</p>
           </div>
           <div className="how-step">
             <div className="how-step-num">02</div>
@@ -170,7 +164,7 @@ export default async function HomePage() {
 
       {/* ── Social Proof ── */}
       <section className="social-proof">
-        <h2 className="social-proof-title">Loved by Australian Fans</h2>
+        <h2 className="social-proof-title">Loved by British Fans</h2>
         <p className="social-proof-rating">⭐⭐⭐⭐⭐  4.9 out of 5 from fan reviews</p>
         <div className="review-grid">
           {REVIEWS.map((r, i) => (
@@ -179,19 +173,6 @@ export default async function HomePage() {
               <p className="review-text">"{r.text}"</p>
               <p className="review-author">— {r.author}</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Popular Categories quick links ── */}
-      <section style={{ padding: '3rem 1.5rem', maxWidth: 1400, margin: '0 auto', textAlign: 'center' }}>
-        <h2 className="section-heading">Popular Categories</h2>
-        <div className="chips-row chips-row--wrap" style={{ justifyContent: 'center' }}>
-          {popularCategories.slice(0, 16).map(c => (
-            <Link key={c.slug} href={`/categories/${c.slug}/`} className="category-chip">
-              {c.emoji && <span>{c.emoji}</span>}
-              {c.label}
-            </Link>
           ))}
         </div>
       </section>

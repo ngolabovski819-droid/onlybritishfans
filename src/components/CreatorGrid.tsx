@@ -56,7 +56,7 @@ export default function CreatorGrid({
       if (filterGroups && Object.keys(filterGroups).length) {
         params.set('filter_groups', JSON.stringify(filterGroups));
       }
-      // Skip AU location filter when on a category page (matches SSR behaviour)
+      // Skip UK location filter when on a category page (matches SSR behaviour)
       if (skipLocationFilter) params.set('skip_location_filter', 'true');
 
       const res = await fetch(`/api/search?${params.toString()}`);
@@ -75,7 +75,7 @@ export default function CreatorGrid({
   if (creators.length === 0) {
     return (
       <div className="empty-state">
-        <p>No Australian creators found matching your filters.</p>
+        <p>No British creators found matching your filters.</p>
         <a href="/search" className="empty-state-link">Try a broader search</a>
       </div>
     );
@@ -84,7 +84,7 @@ export default function CreatorGrid({
   return (
     <div>
       <p className="results-count">
-        Showing <strong>{creators.length}</strong>{initialTotal > creators.length ? ` of ${initialTotal.toLocaleString()}` : ''} Australian creators
+        Showing <strong>{creators.length}</strong>{initialTotal > creators.length ? ` of ${initialTotal.toLocaleString()}` : ''} British creators
       </p>
       <div className="creator-grid">
         {creators.map((c, i) => (

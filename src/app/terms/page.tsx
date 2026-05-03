@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — OnlyAussieFans',
-  description: 'Terms of service for OnlyAussieFans, Australia\'s OnlyFans search directory.',
+  title: 'Terms of Service â€” OnlyBritishFans',
+  description: 'Terms of service for OnlyBritishFans, Australia\'s OnlyFans search directory.',
   alternates: { canonical: `${SITE_URL}/terms/` },
 };
 
@@ -16,14 +16,14 @@ export default function TermsPage() {
 
       <h2>Age Requirement</h2>
       <p>
-        OnlyAussieFans is an adult content directory. You must be 18 years of age or older to use
+        OnlyBritishFans is an adult content directory. You must be 18 years of age or older to use
         this website. By accessing our site, you confirm you meet this age requirement.
       </p>
 
       <h2>Use of the Site</h2>
-      <p>You agree to use OnlyAussieFans only for lawful purposes and in a manner that does not:</p>
+      <p>You agree to use OnlyBritishFans only for lawful purposes and in a manner that does not:</p>
       <ul>
-        <li>Violate any applicable Australian or international laws</li>
+        <li>Violate any applicable British or international laws</li>
         <li>Infringe the intellectual property rights of any creator or third party</li>
         <li>Attempt to scrape, crawl or automated-access our platform without permission</li>
         <li>Interfere with the security or integrity of our systems</li>
@@ -31,7 +31,7 @@ export default function TermsPage() {
 
       <h2>Disclaimers</h2>
       <p>
-        OnlyAussieFans is an independent directory service. We are not affiliated with, endorsed by,
+        OnlyBritishFans is an independent directory service. We are not affiliated with, endorsed by,
         or in partnership with OnlyFans or any creator listed on this platform. Creator information
         is sourced from publicly available data and may not always be current.
       </p>
@@ -55,14 +55,14 @@ export default function TermsPage() {
 
       <h2>Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by Australian law, OnlyAussieFans is not liable for any
+        To the maximum extent permitted by English and Welsh law, OnlyBritishFans is not liable for any
         direct, indirect, incidental or consequential damages arising from your use of this site.
       </p>
 
       <h2>Governing Law</h2>
       <p>
-        These terms are governed by the laws of New South Wales, Australia. Any disputes shall be
-        subject to the exclusive jurisdiction of the courts of New South Wales.
+        These terms are governed by the laws of England and Wales, Australia. Any disputes shall be
+        subject to the exclusive jurisdiction of the courts of England and Wales.
       </p>
     </div>
   );

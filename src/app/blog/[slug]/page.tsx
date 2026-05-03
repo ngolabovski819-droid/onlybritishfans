@@ -5,7 +5,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog';
 
 export const revalidate = 3600;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -54,7 +54,7 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     datePublished: post.date,
     description: post.description,
-    publisher: { '@type': 'Organization', name: 'OnlyAussieFans', url: SITE_URL },
+    publisher: { '@type': 'Organization', name: 'OnlyBritishFans', url: SITE_URL },
   };
 
   return (

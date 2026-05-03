@@ -4,7 +4,7 @@ import SearchFilters from '@/components/SearchFilters';
 import CreatorGrid from '@/components/CreatorGrid';
 
 export const metadata: Metadata = {
-  title: 'Search Australian OnlyFans Creators',
+  title: 'Search British OnlyFans Creators',
   robots: { index: false, follow: true },
 };
 
@@ -44,7 +44,7 @@ export default async function SearchPage({ searchParams }: Props) {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <h1 style={{ fontSize: '1.4rem', fontWeight: 800 }}>
-            {q ? `Results for "${q}"` : 'All Australian Creators'}
+            {q ? `Results for "${q}"` : 'All British Creators'}
           </h1>
           <span className="results-count">{total.toLocaleString()} creators</span>
         </div>

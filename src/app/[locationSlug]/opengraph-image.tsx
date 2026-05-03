@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { getStateByUrlSlug } from '@/config/states';
+import { getRegionByUrlSlug } from '@/config/regions';
 import { getCityByUrlSlug } from '@/config/cities';
 
 export const runtime = 'edge';
@@ -11,9 +11,9 @@ interface Props {
 
 export default async function OGImage({ params }: Props) {
   const { locationSlug } = await params;
-  const state = getStateByUrlSlug(locationSlug);
-  const city  = !state ? getCityByUrlSlug(locationSlug) : null;
-  const label = state?.label ?? city?.label ?? locationSlug.replace(/-onlyfans$/, '').replace(/-/g, ' ');
+  const region = getRegionByUrlSlug(locationSlug);
+  const city   = !region ? getCityByUrlSlug(locationSlug) : null;
+  const label  = region?.label ?? city?.label ?? locationSlug.replace(/-onlyfans$/, '').replace(/-/g, ' ');
 
   return new ImageResponse(
     (
@@ -28,7 +28,7 @@ export default async function OGImage({ params }: Props) {
         }}
       >
         <div style={{ fontSize: 24, color: '#8888aa', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-          🇦🇺  OnlyAussieFans
+          �🇧  OnlyBritishFans
         </div>
         <div style={{
           fontSize: 68, fontWeight: 800,
@@ -40,7 +40,7 @@ export default async function OGImage({ params }: Props) {
           {label}
         </div>
         <div style={{ fontSize: 28, color: '#8888aa' }}>
-          Best Australian OnlyFans Creators
+          Best British OnlyFans Creators
         </div>
       </div>
     ),

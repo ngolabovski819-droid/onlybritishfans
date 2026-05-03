@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — OnlyAussieFans',
-  description: 'Privacy policy for OnlyAussieFans. Learn how we collect, use and protect your data.',
+  title: 'Privacy Policy â€” OnlyBritishFans',
+  description: 'Privacy policy for OnlyBritishFans. Learn how we collect, use and protect your data.',
   alternates: { canonical: `${SITE_URL}/privacy/` },
 };
 
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
       <h2>Information We Collect</h2>
       <p>
-        OnlyAussieFans does not require account creation and does not collect personally identifiable
+        OnlyBritishFans does not require account creation and does not collect personally identifiable
         information from visitors beyond standard web analytics. We may collect:
       </p>
       <ul>
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
 
       <h2>Your Rights</h2>
       <p>
-        Under Australian Privacy Act 1988 principles, you have the right to access information
+        Under UK GDPR and Data Protection Act 2018 principles, you have the right to access information
         held about you and to request corrections. Contact us via our contact page for any
         privacy-related requests.
       </p>

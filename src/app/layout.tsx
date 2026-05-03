@@ -6,31 +6,31 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import AgeGate from '@/components/AgeGate';
 
-const GA_ID = 'G-7L95HMVCH9';
+const GA_ID = 'G-PLACEHOLDER';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const syne  = Syne({ subsets: ['latin'], variable: '--font-syne',  display: 'swap', weight: ['700', '800'] });
 
-const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  ?? 'https://onlyaussiefans.com';
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? 'OnlyAussieFans';
+const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  ?? 'https://onlybritishfans.com';
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? 'OnlyBritishFans';
 
 export const metadata: Metadata = {
   title: {
-    default: 'OnlyAussieFans — #1 Australian OnlyFans Search Engine',
-    template: '%s | OnlyAussieFans',
+    default: 'OnlyBritishFans — #1 British OnlyFans Search Engine',
+    template: '%s | OnlyBritishFans',
   },
   description:
-    'Find the best Australian OnlyFans creators. Search by location, category, price and more. 500+ verified Aussie creators — updated daily.',
+    'Find the best British OnlyFans creators. Search by location, price and more. Thousands of verified UK creators — updated daily.',
   metadataBase: new URL(SITE_URL),
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     siteName: SITE_NAME,
-    locale: 'en_AU',
+    locale: 'en_GB',
     type: 'website',
   },
   alternates: {
     canonical: SITE_URL,
-    languages: { 'en-AU': SITE_URL },
+    languages: { 'en-GB': SITE_URL },
   },
   other: {
     rating: 'adult',
@@ -46,8 +46,8 @@ const websiteSchema = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: SITE_NAME,
-      description: 'The #1 Australian OnlyFans search engine — find Aussie creators by location, category and price.',
-      inLanguage: 'en-AU',
+      description: 'The #1 British OnlyFans search engine — find UK creators by location and price.',
+      inLanguage: 'en-GB',
       potentialAction: {
         '@type': 'SearchAction',
         target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/search?q={search_term_string}` },
@@ -66,12 +66,12 @@ const websiteSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-AU" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="en-GB" className={`${inter.variable} ${syne.variable}`}>
       <head>
         <meta name="rating" content="adult" />
-        <meta name="DC.language" content="en-AU" />
+        <meta name="DC.language" content="en-GB" />
         <link rel="preconnect" href="https://images.weserv.nl" />
-        <link rel="alternate" hrefLang="en-AU" href={SITE_URL} />
+        <link rel="alternate" hrefLang="en-GB" href={SITE_URL} />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.svg" sizes="any" />
         <script

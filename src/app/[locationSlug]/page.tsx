@@ -1,16 +1,15 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getStateByUrlSlug, states } from '@/config/states';
-import { getCityByUrlSlug, getCitiesByState, cities } from '@/config/cities';
-import { popularCategories } from '@/config/categories';
+import { getRegionByUrlSlug, regions } from '@/config/regions';
+import { getCityByUrlSlug, getCitiesByRegion, cities } from '@/config/cities';
 import { fetchCreators } from '@/lib/supabase';
 import CreatorGrid from '@/components/CreatorGrid';
 import RelatedLocations from '@/components/RelatedLocations';
 
 export const revalidate = 3600;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 interface Props {
   params: Promise<{ locationSlug: string }>;
@@ -18,16 +17,16 @@ interface Props {
 
 export async function generateStaticParams() {
   return [
-    ...states.map(s => ({ locationSlug: s.urlSlug })),
+    ...regions.map(r => ({ locationSlug: r.urlSlug })),
     ...cities.map(c => ({ locationSlug: c.urlSlug })),
   ];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locationSlug } = await params;
-  const state = getStateByUrlSlug(locationSlug);
-  const city  = !state ? getCityByUrlSlug(locationSlug) : null;
-  const loc   = state ?? city;
+  const region = getRegionByUrlSlug(locationSlug);
+  const city   = !region ? getCityByUrlSlug(locationSlug) : null;
+  const loc    = region ?? city;
   if (!loc) return {};
   const url = `${SITE_URL}/${locationSlug}/`;
   return {
@@ -45,13 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocationPage({ params }: Props) {
   const { locationSlug } = await params;
-  const state = getStateByUrlSlug(locationSlug);
-  const city  = !state ? getCityByUrlSlug(locationSlug) : null;
+  const region = getRegionByUrlSlug(locationSlug);
+  const city   = !region ? getCityByUrlSlug(locationSlug) : null;
 
-  if (!state && !city) notFound();
+  if (!region && !city) notFound();
 
-  const loc = (state ?? city)!;
-  const isState = !!state;
+  const loc      = (region ?? city)!;
+  const isRegion = !!region;
 
   const { creators, total, hasMore } = await fetchCreators({
     locationTerms: loc.terms,
@@ -75,10 +74,10 @@ export default async function LocationPage({ params }: Props) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-      ...(city && state
-        ? [{ '@type': 'ListItem', position: 2, name: state.label, item: `${SITE_URL}/${state.urlSlug}/` }]
+      ...(city
+        ? [{ '@type': 'ListItem', position: 2, name: 'UK', item: SITE_URL }]
         : []),
-      { '@type': 'ListItem', position: isState ? 2 : 3, name: loc.label, item: `${SITE_URL}/${locationSlug}/` },
+      { '@type': 'ListItem', position: isRegion ? 2 : 3, name: loc.label, item: `${SITE_URL}/${locationSlug}/` },
     ],
   };
 
@@ -95,8 +94,8 @@ export default async function LocationPage({ params }: Props) {
     })),
   } : null;
 
-  // Find parent state for city pages
-  const parentState = city ? states.find(s => s.slug === city.parentState) : null;
+  // Find parent region for city pages
+  const parentRegion = city ? regions.find(r => r.slug === city.parentRegion) : null;
 
   return (
     <>
@@ -111,15 +110,15 @@ export default async function LocationPage({ params }: Props) {
         <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link href="/">Home</Link>
           <span className="breadcrumb-sep">›</span>
-          {city && parentState && (
+          {city && parentRegion && (
             <>
-              <Link href={`/${parentState.urlSlug}/`}>{parentState.label}</Link>
+              <Link href={`/${parentRegion.urlSlug}/`}>{parentRegion.label}</Link>
               <span className="breadcrumb-sep">›</span>
             </>
           )}
-          {isState && (
+          {isRegion && (
             <>
-              <Link href="/search">Australia</Link>
+              <Link href="/search">UK</Link>
               <span className="breadcrumb-sep">›</span>
             </>
           )}
@@ -142,39 +141,24 @@ export default async function LocationPage({ params }: Props) {
           locationTerms={loc.terms}
         />
 
-        {/* Browse by category */}
-        <section style={{ margin: '2.5rem 0 1.5rem' }}>
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-            Browse {loc.label} Creators by Category
-          </h2>
-          <div className="chips-row chips-row--wrap">
-            {popularCategories.map(c => (
-              <Link key={c.slug} href={`/${locationSlug}/${c.slug}/`} className="category-chip">
-                {c.emoji && <span>{c.emoji}</span>}
-                {c.label}
-              </Link>
-            ))}
-          </div>
-        </section>
-
         {/* Related locations */}
-        {isState && state && (
+        {isRegion && region && (
           <RelatedLocations
             mode="state-to-cities"
-            stateSlug={state.slug}
-            stateLabel={state.label}
+            stateSlug={region.slug}
+            stateLabel={region.label}
           />
         )}
         {city && (
           <RelatedLocations
             mode="city-to-siblings"
             citySlug={city.slug}
-            parentStateLabel={parentState?.label}
-            parentStateUrlSlug={parentState?.urlSlug}
+            parentStateLabel={parentRegion?.label}
+            parentStateUrlSlug={parentRegion?.urlSlug}
           />
         )}
-        {isState && (
-          <RelatedLocations mode="state-chips" currentSlug={state?.slug} />
+        {isRegion && (
+          <RelatedLocations mode="state-chips" currentSlug={region?.slug} />
         )}
 
         {/* FAQ */}
@@ -190,14 +174,14 @@ export default async function LocationPage({ params }: Props) {
           </dl>
         </section>
 
-        {/* State directory links for city pages */}
-        {city && parentState && (
+        {/* Region directory links for city pages */}
+        {city && parentRegion && (
           <section style={{ padding: '2rem 0' }}>
             <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-              More Cities in {parentState.label}
+              More Cities in {parentRegion.label}
             </h2>
             <div className="chips-row chips-row--wrap">
-              {getCitiesByState(city.parentState)
+              {getCitiesByRegion(city.parentRegion)
                 .filter(c => c.slug !== city.slug)
                 .map(c => (
                   <Link key={c.slug} href={`/${c.urlSlug}/`} className="location-chip">{c.label} OnlyFans</Link>

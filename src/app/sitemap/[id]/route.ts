@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { states } from '@/config/states';
+import { regions } from '@/config/regions';
 import { cities } from '@/config/cities';
-import { categories } from '@/config/categories';
 import { getAllPosts } from '@/lib/blog';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
 
 function url(path: string, priority = 0.7, freq = 'weekly'): string {
   return `<url><loc>${SITE_URL}${path}</loc><changefreq>${freq}</changefreq><priority>${priority}</priority></url>`;
@@ -27,7 +26,7 @@ interface Params {
 export async function GET(_req: Request, { params }: Params) {
   const { id } = await params;
 
-  /** Sitemap 0: static + locations (states + cities) */
+  /** Sitemap 0: static + locations (regions + cities) */
   if (id === '0') {
     const staticUrls = [
       url('/', 1.0, 'daily'),
@@ -38,32 +37,13 @@ export async function GET(_req: Request, { params }: Params) {
       url('/terms/', 0.3, 'monthly'),
       url('/dmca/', 0.3, 'monthly'),
     ];
-    const stateUrls = states.map(s => url(`/${s.urlSlug}/`, 0.9, 'daily'));
-    const cityUrls  = cities.map(c => url(`/${c.urlSlug}/`, 0.8, 'daily'));
-    return buildSitemap([...staticUrls, ...stateUrls, ...cityUrls]);
+    const regionUrls = regions.map(r => url(`/${r.urlSlug}/`, 0.9, 'daily'));
+    const cityUrls   = cities.map(c => url(`/${c.urlSlug}/`, 0.8, 'daily'));
+    return buildSitemap([...staticUrls, ...regionUrls, ...cityUrls]);
   }
 
-  /** Sitemap 1: categories + combo pages */
+  /** Sitemap 1: blog posts */
   if (id === '1') {
-    const catUrls = categories.map(c => url(`/categories/${c.slug}/`, 0.85, 'daily'));
-    // State × popular category combos
-    const popularCatSlugs = categories.filter(c => c.popular).map(c => c.slug);
-    const comboUrls: string[] = [];
-    for (const s of states) {
-      for (const cs of popularCatSlugs) {
-        comboUrls.push(url(`/${s.urlSlug}/${cs}/`, 0.7, 'weekly'));
-      }
-    }
-    for (const c of cities) {
-      for (const cs of popularCatSlugs) {
-        comboUrls.push(url(`/${c.urlSlug}/${cs}/`, 0.6, 'weekly'));
-      }
-    }
-    return buildSitemap([...catUrls, ...comboUrls]);
-  }
-
-  /** Sitemap 2: blog posts */
-  if (id === '2') {
     const posts = getAllPosts();
     const blogUrls = posts.map(p => url(`/blog/${p.slug}/`, 0.7, 'weekly'));
     return buildSitemap(blogUrls.length ? blogUrls : [url('/blog/', 0.7, 'weekly')]);

@@ -1,45 +1,38 @@
 /**
- * Terms for searching the `location` column — short abbreviations are fine
- * here since location fields are terse and rarely produce false positives.
+ * Terms for searching the `location` column.
  */
-export const AU_TERMS_LOCATION: string[] = [
-  'australia', 'australian', 'aussie',
-  'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide',
-  'canberra', 'hobart', 'darwin', 'cairns',
-  'gold coast', 'sunshine coast', 'newcastle', 'wollongong', 'geelong',
-  'townsville', 'ballarat', 'bendigo', 'launceston', 'mackay',
-  'nsw', 'vic', 'qld', 'wa', 'sa', 'act', 'tas', 'nt',
-  'new south wales', 'victoria', 'queensland',
-  'western australia', 'south australia', 'tasmania', 'northern territory',
+export const UK_TERMS_LOCATION: string[] = [
+  'united kingdom', 'uk', 'britain', 'british', 'england', 'english',
+  'scotland', 'scottish', 'wales', 'welsh', 'northern ireland',
+  'london', 'manchester', 'birmingham', 'glasgow', 'liverpool',
+  'edinburgh', 'bristol', 'cardiff', 'leeds', 'sheffield',
+  'newcastle', 'nottingham', 'southampton', 'leicester', 'brighton',
+  'aberdeen', 'swansea', 'belfast',
+  'eng', 'sco', 'wal', 'nir',
 ];
 
 /**
- * Terms safe to search inside free-text bio (`about`) — short abbreviations
- * and ambiguous words omitted to avoid false positives:
- *   - dropped: wa, sa, nt, act, vic (match partial words / common elsewhere)
- *   - dropped: nsw, qld, tas (3-letter codes — too risky in bio text)
- *   - dropped: victoria (very common given name)
- *   - dropped: newcastle (city exists in UK too)
+ * Terms safe to search inside free-text bio (`about`).
  */
-export const AU_TERMS_BIO: string[] = [
-  'australia', 'australian', 'aussie',
-  'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide',
-  'canberra', 'hobart', 'darwin', 'cairns',
-  'gold coast', 'sunshine coast', 'wollongong', 'geelong',
-  'townsville', 'ballarat', 'bendigo', 'launceston', 'mackay',
-  'new south wales', 'queensland',
-  'western australia', 'south australia', 'tasmania', 'northern territory',
+export const UK_TERMS_BIO: string[] = [
+  'united kingdom', 'britain', 'british', 'england', 'english',
+  'scotland', 'scottish', 'wales', 'welsh', 'northern ireland',
+  'london', 'manchester', 'birmingham', 'glasgow', 'liverpool',
+  'edinburgh', 'bristol', 'cardiff', 'leeds', 'sheffield',
+  'newcastle', 'nottingham', 'southampton', 'leicester', 'brighton',
+  'aberdeen', 'swansea', 'belfast',
 ];
 
 /**
- * Returns a PostgREST OR expression covering all AU location terms.
- * Searches `location` column only — `about` wildcard scans across 100k rows
- * are too slow and cause Supabase 500 timeouts.
+ * Returns a PostgREST OR expression covering all UK location terms.
  */
-export function buildAuOrExpression(): string {
-  const parts = AU_TERMS_LOCATION.map((t) => `location.ilike.*${t}*`);
+export function buildUkOrExpression(): string {
+  const parts = UK_TERMS_LOCATION.map((t) => `location.ilike.*${t}*`);
   return `(${parts.join(',')})`;
 }
 
-/** @deprecated kept for reference — use AU_TERMS_LOCATION / AU_TERMS_BIO directly */
-export const AU_TERMS = AU_TERMS_LOCATION;
+/** @deprecated use UK_TERMS_LOCATION / UK_TERMS_BIO directly */
+export const AU_TERMS_LOCATION = UK_TERMS_LOCATION;
+export const AU_TERMS_BIO = UK_TERMS_BIO;
+export const AU_TERMS = UK_TERMS_LOCATION;
+export function buildAuOrExpression() { return buildUkOrExpression(); }

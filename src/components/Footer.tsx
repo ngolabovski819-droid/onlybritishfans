@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import { states } from '@/config/states';
-import { popularCategories } from '@/config/categories';
+import { regions } from '@/config/regions';
+import { cities } from '@/config/cities';
+
+const TOP_CITIES = cities.slice(0, 8);
 
 export default function Footer() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlyaussiefans.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://onlybritishfans.com';
   const currentYear = new Date().getFullYear();
 
   return (
@@ -12,44 +14,41 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand column */}
           <div className="footer-brand">
-            <Link href="/" className="footer-logo">OnlyAussieFans</Link>
+            <Link href="/" className="footer-logo">OnlyBritishFans</Link>
             <p className="footer-tagline">
-              Australia&apos;s largest OnlyFans creator directory. Find free and premium Aussie creators updated daily.
+              Britain&apos;s largest OnlyFans creator directory. Find free and premium UK creators updated daily.
             </p>
             <p className="footer-disclaimer">
-              OnlyAussieFans.com is not affiliated with or endorsed by OnlyFans or Fenix International Limited.
+              OnlyBritishFans.com is not affiliated with or endorsed by OnlyFans or Fenix International Limited.
               All profiles linked are publicly listed. This site is for adults 18+ only.
             </p>
           </div>
 
-          {/* States */}
+          {/* Regions */}
           <div className="footer-col">
-            <h3 className="footer-heading">Browse by State</h3>
+            <h3 className="footer-heading">Browse by Region</h3>
             <ul className="footer-list">
-              {states.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/${s.urlSlug}/`} className="footer-link">
-                    {s.label} ({s.abbr})
+              {regions.map((r) => (
+                <li key={r.slug}>
+                  <Link href={`/${r.urlSlug}/`} className="footer-link">
+                    {r.label} ({r.abbr})
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* Top Cities */}
           <div className="footer-col">
-            <h3 className="footer-heading">Top Categories</h3>
+            <h3 className="footer-heading">Top Cities</h3>
             <ul className="footer-list">
-              {popularCategories.slice(0, 8).map((c) => (
+              {TOP_CITIES.map((c) => (
                 <li key={c.slug}>
-                  <Link href={`/categories/${c.slug}/`} className="footer-link">
+                  <Link href={`/${c.urlSlug}/`} className="footer-link">
                     {c.label}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/categories/" className="footer-link">All Categories →</Link>
-              </li>
             </ul>
           </div>
 
@@ -71,7 +70,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {currentYear} OnlyAussieFans. All rights reserved.</p>
+          <p>© {currentYear} OnlyBritishFans. All rights reserved.</p>
           <p className="footer-compliance">
             This website contains adult content and is intended for persons aged 18 and over.
             By using this site you confirm you are 18+.{' '}
@@ -79,7 +78,7 @@ export default function Footer() {
             <Link href="/terms" className="footer-link">Terms of Use</Link>
           </p>
           <p className="footer-hreflang">
-            <link rel="alternate" hrefLang="en-AU" href={siteUrl} />
+            <link rel="alternate" hrefLang="en-GB" href={siteUrl} />
           </p>
         </div>
       </div>

@@ -1,5 +1,3 @@
-import { states } from './states';
-
 export interface FilterOption {
   label: string;
   terms: string[]; // mapped to about.ilike searches
@@ -42,15 +40,6 @@ export const filterGroups: FilterGroup[] = [
       { label: 'Mixed', terms: ['mixed', 'biracial', 'mixed race'] },
       { label: 'Filipina', terms: ['filipina', 'philippine', 'pinay'] },
     ],
-  },
-  {
-    id: 'location',
-    label: 'Location',
-    type: 'location',
-    options: states.map((s) => ({
-      label: `${s.abbr} – ${s.label}`,
-      terms: s.terms,
-    })),
   },
   {
     id: 'gender',
@@ -140,8 +129,8 @@ export const filterGroups: FilterGroup[] = [
     type: 'price',
     options: [
       { label: 'Free', terms: ['free'] },
-      { label: 'Under A$5', terms: ['under5'] },
-      { label: 'Under A$10', terms: ['under10'] },
+      { label: 'Under £5', terms: ['under5'] },
+      { label: 'Under £10', terms: ['under10'] },
       { label: 'Any Price', terms: ['any'] },
     ],
   },
