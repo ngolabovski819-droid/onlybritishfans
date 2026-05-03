@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand column */}
           <div className="footer-brand">
-            <Link href="/" className="footer-logo">OnlyBritishFans</Link>
+            <Link href="/" className="footer-logo">🇬🇧 OnlyBritishFans</Link>
             <p className="footer-tagline">
               Britain&apos;s largest OnlyFans creator directory. Find free and premium UK creators updated daily.
             </p>

@@ -21,7 +21,8 @@ export default function Nav() {
       {/* Row 1 — logo + main links */}
       <div className="nav-row1">
         <Link href="/" className="nav-logo">
-          OnlyBritishFans
+          <span className="nav-logo-flag">🇬🇧</span>
+          <span className="nav-logo-text">OnlyBritishFans</span>
         </Link>
 
         {/* Desktop nav */}

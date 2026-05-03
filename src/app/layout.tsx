@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Syne } from 'next/font/google';
+import { DM_Sans, Playfair_Display } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Nav from '@/components/Nav';
@@ -8,8 +8,8 @@ import AgeGate from '@/components/AgeGate';
 
 const GA_ID = 'G-JMC006C5K7';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const syne  = Syne({ subsets: ['latin'], variable: '--font-syne',  display: 'swap', weight: ['700', '800'] });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', display: 'swap', weight: ['400', '500', '600', '700'] });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', display: 'swap', weight: ['700', '800', '900'] });
 
 const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  ?? 'https://onlybritishfans.com';
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? 'OnlyBritishFans';
@@ -66,7 +66,7 @@ const websiteSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="en-GB" className={`${dmSans.variable} ${playfair.variable}`}>
       <head>
         <meta name="rating" content="adult" />
         <meta name="DC.language" content="en-GB" />
