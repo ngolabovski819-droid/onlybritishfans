@@ -59,6 +59,7 @@ export function getSponsorCampaign(username: string): SponsorCampaign | undefine
 export const GO_ALIASES: Record<string, string> = {
   // sophiescrts
   'diana.saliva': 'sophiescrts',
+  hotgirlonliine: 'sophiescrts',
 };
 
 const NORMALIZED_ALIASES = new Map(
